@@ -67,7 +67,7 @@ def save_to_csv(data, filename):
 
 # Main execution
 if __name__ == "__main__":
-    pages_to_scrape = 3  # Adjust the number of pages to scrape
+    pages_to_scrape = 10  # Adjust the number of pages to scrape
     scraped_books = scrape_books(pages_to_scrape)
 
     if scraped_books:
