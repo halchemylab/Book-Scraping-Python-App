@@ -5,6 +5,17 @@ import csv
 # URL of the website to scrape
 BASE_URL = "http://books.toscrape.com/catalogue/page-{}.html"
 
+# Function to convert textual ratings to numerical ratings
+def convert_rating_to_number(rating):
+    rating_map = {
+        'One': 1,
+        'Two': 2,
+        'Three': 3,
+        'Four': 4,
+        'Five': 5
+    }
+    return rating_map.get(rating, 0)  # Default to 0 if rating is not found
+
 # Function to scrape a single page
 def scrape_page(page_number):
     url = BASE_URL.format(page_number)
@@ -20,7 +31,8 @@ def scrape_page(page_number):
         title = book.h3.a['title']
         price = book.find('p', class_='price_color').text
         availability = book.find('p', class_='instock availability').text.strip()
-        rating = book.p['class'][1]  # Get the second class for the rating (e.g., "Three")
+        rating_text = book.p['class'][1]  # Get the second class for the rating (e.g., "Three")
+        rating = convert_rating_to_number(rating_text)
         books.append({
             'Title': title,
             'Price': price,
